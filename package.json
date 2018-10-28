@@ -1,0 +1,27 @@
+{
+  "name": "learn-re",
+  "version": "0.1.0",
+  "scripts": {
+    "build:reason": "bsb -make-world",
+    "build:webpack": "NODE_ENV=production webpack",
+    "build": "concurrently 'yarn build:reason' 'yarn build:webpack'",
+    "clean": "bsb -clean-world",
+    "start": "concurrently 'yarn start:reason' 'yarn start:webpack' webpack-dev-server",
+    "start:reason": "bsb -make-world -w",
+    "start:webpack": "webpack -w"
+  },
+  "keywords": [
+    "ReasonML",
+    "BuckleScript"
+  ],
+  "author": "An Cao <kcj.pop.com@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "bs-platform": "^4.0.6",
+    "concurrently": "^4.0.1",
+    "html-webpack-plugin": "^3.2.0",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.9"
+  }
+}
