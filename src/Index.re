@@ -252,6 +252,16 @@ let rec draw = (cfg: config, canvas: canvas, ctx: context) => {
     ctx,
   );
 
+  /* Show FPS */
+  drawText(
+    ~x=100.,
+    ~y=50.,
+    ~color=Colors.night,
+    ~text=
+      "FPS: " ++ Js.Float.toFixedWithPrecision(~digits=0, FPS.calculate()),
+    ctx,
+  );
+
   requestAnimationFrame(_ts => {
     let degree =
       switch (deg +. cfg.step) {
@@ -267,7 +277,7 @@ let rec draw = (cfg: config, canvas: canvas, ctx: context) => {
 let run = () => {
   Js.log("Start Trigonoparty");
 
-  let initConfig: config = {radius: None, step: 0.5, degree: 1.};
+  let initConfig: config = {radius: None, step: 0.2, degree: 1.};
 
   let canvas = getCanvasById("js-canvas");
   let ctx = getContext(canvas, "2d", contextOptions(~alpha=false));
