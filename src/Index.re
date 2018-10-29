@@ -1,7 +1,10 @@
 open Canvas;
 
-type config = {radius: option(float)};
-let cfg = {radius: None};
+type config = {
+  radius: option(float),
+  step: float,
+  degree,
+};
 
 [@bs.val] [@bs.scope "document"]
 external getCanvasById: string => canvas = "getElementById";
@@ -32,7 +35,7 @@ let resize = (canvas: canvas) =>
     heightSet(canvas, clientHeight);
   };
 
-let draw = (canvas: canvas, ctx: context) => {
+let rec draw = (cfg: config, canvas: canvas, ctx: context) => {
   let w = widthGet(canvas);
   let h = heightGet(canvas);
 
@@ -71,7 +74,7 @@ let draw = (canvas: canvas, ctx: context) => {
     ctx,
   );
 
-  let deg: degree = 45.;
+  let deg: degree = cfg.degree;
   let degInRad: radian = degToRad(deg);
   let sinus = -. sin(degInRad);
   let cosinus = cos(degInRad);
@@ -136,6 +139,7 @@ let draw = (canvas: canvas, ctx: context) => {
     ~color=Colors.night,
     ctx,
   );
+  /* FIXME: Radius label being overlapped */
   drawText(
     ~x=x +. (lineX -. x) /. 2.,
     ~y=y +. (lineY -. y) /. 2. -. labelPadding,
@@ -247,17 +251,31 @@ let draw = (canvas: canvas, ctx: context) => {
     ~shouldFill=true,
     ctx,
   );
+
+  requestAnimationFrame(_ts => {
+    let degree =
+      switch (deg +. cfg.step) {
+      | v when v > 360. => mod_float(v, 360.)
+      | v when v < 0. => v +. 360.
+      | v => v
+      };
+
+    draw({...cfg, degree}, canvas, ctx);
+  });
 };
 
 let run = () => {
   Js.log("Start Trigonoparty");
+
+  let initConfig: config = {radius: None, step: 0.5, degree: 1.};
 
   let canvas = getCanvasById("js-canvas");
   let ctx = getContext(canvas, "2d", contextOptions(~alpha=false));
   imageSmoothingEnabledSet(ctx, true);
   imageSmoothingQualitySet(ctx, "high");
   resize(canvas);
-  draw(canvas, ctx);
+
+  draw(initConfig, canvas, ctx);
 };
 
 run();

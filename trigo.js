@@ -491,15 +491,3 @@
     togglePlay
   };
 }
-
-function A(props) {
-  const [name, setName] = useState('what');
-
-  return <input />;
-}
-
-function B(props) {
-  const [name, setName] = useState('when');
-
-  return <h1>{name}</h1>;
-}
