@@ -171,8 +171,25 @@ let draw = (canvas: canvas, ctx: context) => {
 
   /* Draw secant */
   drawLine(~fromX=tanX, ~fromY=y, ~toX=x, ~toY=y, ~color=Colors.blue, ctx);
+
+  drawText(
+    ~x=x +. (tanX -. x) /. 2.,
+    ~y=y +. labelPadding *. 3.,
+    ~text="secant",
+    ~color=Colors.blue,
+    ctx,
+  );
+
   /* Draw cosecant */
   drawLine(~fromX=x, ~fromY=cotY, ~toX=x, ~toY=y, ~color=Colors.cyan, ctx);
+  drawText(
+    ~x=x -. labelPadding *. 3.,
+    ~y=y +. (cotY -. y) /. 2.,
+    ~text="cosecant",
+    ~angle=90.,
+    ~color=Colors.cyan,
+    ctx,
+  );
 };
 
 let run = () => {
