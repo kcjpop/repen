@@ -27,6 +27,7 @@ type contextOptions = {alpha: bool};
 [@bs.send] external fillText: (context, string, float, float) => unit = "";
 [@bs.send] external moveTo: (context, float, float) => unit = "";
 [@bs.send] external lineTo: (context, float, float) => unit = "";
+[@bs.send] external rect: (context, float, float, float, float) => unit = "";
 [@bs.send] external restore: context => unit = "";
 [@bs.send] external rotate: (context, float) => unit = "";
 [@bs.send] external stroke: context => unit = "";
@@ -88,4 +89,15 @@ let rec drawText =
     textAlignSet(ctx, align);
     fillStyleSet(ctx, color);
     fillText(ctx, text, x, y);
+  };
+
+let rec drawRect = (~x, ~y, ~w, ~h, ~color=Colors.gray, ~angle=0., ~shouldFill=false, ~lineWidth=1.5, ctx: context) =>
+  if (angle !== 0.) {
+    withAngle(ctx, x, y, angle, drawRect(~x=0., ~y=0., ~w, ~h, ~color, ~angle=0., ~shouldFill, ~lineWidth))
+  } else {
+    lineWidthSet(ctx, lineWidth);
+    strokeStyleSet(ctx, color);
+    fillStyleSet(ctx, color);
+    rect(ctx, x, y, w, h);
+    shouldFill ? fill(ctx) : stroke(ctx);
   };
