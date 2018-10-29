@@ -45,7 +45,7 @@ let tPI = 2. *. Js_math._PI;
 let degToRad = (deg: degree): radian => deg /. 360. *. tPI;
 
 let drawLine =
-    (~fromX, ~fromY, ~toX, ~toY, ~color, ~lineWidth=1., ctx: context) => {
+    (~fromX, ~fromY, ~toX, ~toY, ~color, ~lineWidth=1.5, ctx: context) => {
   lineWidthSet(ctx, lineWidth);
   strokeStyleSet(ctx, color);
   beginPath(ctx);

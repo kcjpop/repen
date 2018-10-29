@@ -94,6 +94,56 @@ let draw = (canvas: canvas, ctx: context) => {
   let cotY = isEvenQuad ? lineY -. cotDistance : lineY +. cotDistance;
   let tanCotAngle = isEvenQuad ? coDegree : -. coDegree;
 
+  /* Draw right angle notations */
+
+  /* Draw theta */
+  drawCircle(
+    ~x,
+    ~y,
+    ~r=20.,
+    ~color=Colors.greenLight,
+    ~shouldFill=true,
+    ~endAngle=degToRad(360. -. deg),
+    ctx,
+  );
+
+  drawCircle(
+    ~x,
+    ~y,
+    ~r=20.,
+    ~color=Colors.greenDark,
+    ~shouldFill=false,
+    ~endAngle=degToRad(360. -. deg),
+    ctx,
+  );
+
+  drawText(
+    ~x=x +. labelPadding *. 5.,
+    ~y=y -. labelPadding *. 2.,
+    ~text={js|θ|js},
+    ~color=Colors.greenDark,
+    ~align="left",
+    ctx,
+  );
+
+  /* Draw radius */
+  drawLine(
+    ~fromX=x,
+    ~fromY=y,
+    ~toX=lineX,
+    ~toY=lineY,
+    ~color=Colors.night,
+    ctx,
+  );
+  drawText(
+    ~x=x +. (lineX -. x) /. 2.,
+    ~y=y +. (lineY -. y) /. 2. -. labelPadding,
+    ~text="radius",
+    ~color=Colors.night,
+    ~angle=-. deg,
+    ctx,
+  );
+
   /* Draw sin */
   drawLine(
     ~fromX=lineX,
@@ -188,6 +238,17 @@ let draw = (canvas: canvas, ctx: context) => {
     ~text="cosecant",
     ~angle=90.,
     ~color=Colors.cyan,
+    ctx,
+  );
+
+  /* Draw origin point and radius' endpoint */
+  drawCircle(~x, ~y, ~r=3., ~color=Colors.night, ~shouldFill=true, ctx);
+  drawCircle(
+    ~x=lineX,
+    ~y=lineY,
+    ~r=3.,
+    ~color=Colors.night,
+    ~shouldFill=true,
     ctx,
   );
 };
