@@ -1,6 +1,7 @@
 const path = require('path');
 const outputDir = path.join(__dirname, 'build/');
 
+const PnpWebpackPlugin = require('pnp-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const isProd = process.env.NODE_ENV === 'production';
@@ -17,6 +18,12 @@ module.exports = {
     path: outputDir,
     publicPath: outputDir,
     filename: 'Index.js'
+  },
+  resolve: {
+    plugins: [PnpWebpackPlugin]
+  },
+  resolveLoader: {
+    plugins: [PnpWebpackPlugin.moduleLoader(module)]
   },
   devServer: !isProd ? devServer : undefined,
   plugins: [
