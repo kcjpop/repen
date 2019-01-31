@@ -1,6 +1,7 @@
 {
-  "name": "learn-re",
-  "version": "0.1.0",
+  "name": "repen",
+  "description": "Various codepen converted to ReasonML to learn the language",
+  "version": "1.0.0",
   "scripts": {
     "build:reason": "bsb -make-world",
     "build:webpack": "NODE_ENV=production webpack",
@@ -17,16 +18,14 @@
   "author": "An Cao <kcj.pop.com@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "bs-platform": "^4.0.6",
-    "concurrently": "^4.0.1",
-    "html-webpack-plugin": "^3.2.0",
-    "pnp-webpack-plugin": "^1.2.0",
-    "webpack": "^4.20.2",
-    "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.9"
+    "bs-platform": "6.0.0-dev.1",
+    "concurrently": "4.0.1",
+    "html-webpack-plugin": "3.2.0",
+    "webpack": "4.29.6",
+    "webpack-cli": "3.3.0",
+    "webpack-dev-server": "3.2.1"
   },
-  "installConfig": {
-    "pnp": true
-  },
-  "dependencies": {}
+  "dependencies": {
+    "tablecloth-bucklescript": "https://github.com/kcjpop/tablecloth#bsb-6"
+  }
 }
