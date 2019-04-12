@@ -10,12 +10,20 @@ let renderSidebar = _ => {
   open Util.Dom;
   let sidebarEl = getElementById("js-sidebar")
 
-  let makeLinkEl = href => createElement("a")
-    ->setAttr("href", href)
-    ->setAttr("class", "link")
-    ->setInnerText(Tablecloth.String.capitalize(href));
+  let makeLinkEl = href =>
+    createElement("a")
+      ->setAttr("href", "/" ++ href)
+      ->setAttr("class", "link")
+      ->setInnerText(Tablecloth.String.capitalize(href))
+      ->on("click", e => {
+          preventDefault(e);
+          currentTarget(e)->getAttr("href")->Router.push;
+        });
 
-    ["trigonoparty", "particles"]
+  /* Remove all children nodes */
+  sidebarEl->removeChildrenNodes;
+
+  ["trigonoparty", "particles"]
     |> List.iter(url =>
       url
       |> makeLinkEl
@@ -23,10 +31,9 @@ let renderSidebar = _ => {
     );
 };
 
-let app = () => {
-  let currentPath = Router.path();
+let app = currentPath => {
   renderMainContent(currentPath);
-  renderSidebar(currentPath)
+  renderSidebar(currentPath);
 };
 
-app();
+Router.watch(app);
