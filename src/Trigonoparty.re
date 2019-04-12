@@ -287,5 +287,3 @@ let run = () => {
 
   draw(initConfig, canvas, ctx);
 };
-
-run();

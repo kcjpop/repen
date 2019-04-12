@@ -1,6 +1,12 @@
+[%%debugger.chrome]
 
 let app = () => {
-  Trigonoparty.run();
+  let path = Router.path()
+  switch path {
+  | ["trigonoparty"] => Trigonoparty.run()
+  | [] => Js.log("Home")
+  | _ => Js.log("Not found")
+  };
 };
 
 app();

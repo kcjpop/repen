@@ -4,16 +4,128 @@
     <meta charset="UTF-8" />
     <title>Repen</title>
     <style>
+      /*! minireset.css v0.0.4 | MIT License | github.com/jgthms/minireset.css */
+      html,
+      body,
+      p,
+      ol,
+      ul,
+      li,
+      dl,
+      dt,
+      dd,
+      blockquote,
+      figure,
+      fieldset,
+      legend,
+      textarea,
+      pre,
+      iframe,
+      hr,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        margin: 0;
+        padding: 0;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-size: 100%;
+        font-weight: normal;
+      }
+      ul {
+        list-style: none;
+      }
+      button,
+      input,
+      select,
+      textarea {
+        margin: 0;
+      }
+      html {
+        box-sizing: border-box;
+      }
+      *,
+      *:before,
+      *:after {
+        box-sizing: inherit;
+      }
+      img,
+      embed,
+      iframe,
+      object,
+      video {
+        height: auto;
+        max-width: 100%;
+      }
+      audio {
+        max-width: 100%;
+      }
+      iframe {
+        border: 0;
+      }
+      table {
+        border-collapse: collapse;
+        border-spacing: 0;
+      }
+      td,
+      th {
+        padding: 0;
+        text-align: left;
+      }
+      /* My my style*/
       body {
         padding: 0;
         margin: 0;
         width: 100vw;
         height: 100vh;
         overflow: hidden;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        font-size: 14px;
+        background-color: #fafafa;
+      }
+      canvas {
+        width: 100%;
+      }
+      .container {
+        display: flex;
+      }
+      .sidebar {
+        width: 250px;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .link {
+        text-decoration: none;
+        color: rgb(66, 99, 247);
+        padding: 0.5rem 1rem;
+        border-radius: 0.3rem;
+      }
+      .link:hover {
+        color: rgb(80, 222, 216);
       }
     </style>
   </head>
   <body>
-    <canvas id="js-canvas"></canvas>
+    <div class="container">
+      <div class="sidebar" id="js-sidebar">
+        <a href="/trigonoparty" class="link">Trigonoparty</a>
+        <a href="/trigonoparty" class="link">Trigonoparty</a>
+        <a href="/trigonoparty" class="link">Trigonoparty</a>
+      </div>
+      <div class="main">
+        <canvas id="js-canvas"></canvas>
+      </div>
+    </div>
   </body>
 </html>
