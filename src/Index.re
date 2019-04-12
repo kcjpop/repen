@@ -12,7 +12,6 @@ let renderMainContent = currentPath => {
   imageSmoothingEnabledSet(ctx, true);
   imageSmoothingQualitySet(ctx, "high");
   resize(canvas, canvasWidth, canvasHeight);
-  clearRect(ctx, 0, 0, canvasWidth, canvasHeight);
 
   switch (currentPath) {
   | ["trigonoparty"] => Trigonoparty.run(~canvas, ~ctx)

@@ -24,6 +24,8 @@ let rec draw = (cfg: config, canvas: canvas, ctx: context) => {
   let w = widthGet(canvas);
   let h = heightGet(canvas);
 
+  clearRect(ctx, 0, 0, w, h);
+
   let x = float_of_int(w) /. 2.;
   let y = float_of_int(h) /. 2.;
   let r =
