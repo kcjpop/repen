@@ -1,10 +1,25 @@
 [%%debugger.chrome]
 
-let renderMainContent = fun
-  | ["trigonoparty"] => Trigonoparty.run()
-  | [] => Trigonoparty.run()
+let renderMainContent = currentPath => {
+  open Util.Dom;
+  open Canvas;
+  let canvas = getCanvasById("js-canvas");
+  let mainEl = getElementById("js-main");
+  let canvasWidth = getClientWidth(mainEl);
+  let canvasHeight = max(getClientHeight(mainEl), getClientHeight(body));
+
+  let ctx = getContext(canvas, "2d", contextOptions(~alpha=false));
+  imageSmoothingEnabledSet(ctx, true);
+  imageSmoothingQualitySet(ctx, "high");
+  resize(canvas, canvasWidth, canvasHeight);
+  clearRect(ctx, 0, 0, canvasWidth, canvasHeight);
+
+  switch (currentPath) {
+  | ["trigonoparty"] => Trigonoparty.run(~canvas, ~ctx)
+  | [] => Trigonoparty.run(~canvas, ~ctx)
   | _ => Js.log("Not found")
-  ;
+  };
+};
 
 let renderSidebar = _ => {
   open Util.Dom;

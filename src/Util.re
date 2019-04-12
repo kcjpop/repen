@@ -24,6 +24,7 @@ module Dom = {
 
   [@bs.set] external setInnerText: el => string => unit = "innerText";
 
+  [@bs.val] [@bs.scope "document"] external body: Dom.element = "";
   [@bs.val] [@bs.scope "document"] external getCanvasById: string => Canvas.t = "getElementById";
   [@bs.val] [@bs.scope "document"] external getElementById: string => el = "";
   [@bs.val] [@bs.scope "document"] external createElement: string => el = "";

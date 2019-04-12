@@ -18,15 +18,7 @@ let findQuadrant = (sinus: float, cosinus: float): int => {
   };
 };
 
-/* Document related values */
-[@bs.val] [@bs.scope "document"] external body: Dom.element = "";
-
 let labelPadding = 5.;
-
-let resize = (canvas: canvas, maxWidth: int, maxHeight: int) => {
-  widthSet(canvas, max(widthGet(canvas), maxWidth));
-  heightSet(canvas, max(heightGet(canvas), maxHeight));
-}
 
 let rec draw = (cfg: config, canvas: canvas, ctx: context) => {
   let w = widthGet(canvas);
@@ -267,19 +259,8 @@ let rec draw = (cfg: config, canvas: canvas, ctx: context) => {
   });
 };
 
-let run = () => {
-  open Util.Dom;
-
-  Js.log("Start Trigonoparty");
+let run = (~canvas: Canvas.t, ~ctx) => {
   let initConfig: config = {radius: None, step: 0.2, degree: 1.};
-
-  let canvas = getCanvasById("js-canvas");
-  let mainEl = getElementById("js-main");
-
-  let ctx = getContext(canvas, "2d", contextOptions(~alpha=false));
-  imageSmoothingEnabledSet(ctx, true);
-  imageSmoothingQualitySet(ctx, "high");
-  resize(canvas, getClientWidth(mainEl), max(getClientHeight(mainEl), getClientHeight(body)));
 
   draw(initConfig, canvas, ctx);
 };

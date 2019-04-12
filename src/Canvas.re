@@ -23,6 +23,7 @@ type contextOptions = {alpha: bool};
 
 [@bs.send] external arc: (context, float, float, float, float, float, bool) => unit = "";
 [@bs.send] external beginPath: context => unit = "";
+[@bs.send] external clearRect: (context, int, int, int, int) => unit = "";
 [@bs.send] external closePath: context => unit = "";
 [@bs.send] external fill: context => unit = "";
 [@bs.send] external fillRect: (context, float, float, int, int) => unit = "";
@@ -103,3 +104,8 @@ let rec drawRect = (~x, ~y, ~w, ~h, ~color=Colors.gray, ~angle=0., ~shouldFill=f
     rect(ctx, x, y, w, h);
     shouldFill ? fill(ctx) : stroke(ctx);
   };
+
+let resize = (canvas: canvas, maxWidth: int, maxHeight: int) => {
+  widthSet(canvas, max(widthGet(canvas), maxWidth));
+  heightSet(canvas, max(heightGet(canvas), maxHeight));
+}
