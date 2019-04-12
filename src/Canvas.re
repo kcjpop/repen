@@ -4,6 +4,8 @@ type canvas = {
   mutable height: int,
 };
 
+type t = canvas;
+
 [@bs.deriving abstract]
 type context = {
   mutable imageSmoothingQuality: string,

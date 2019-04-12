@@ -6,9 +6,6 @@ type config = {
   degree,
 };
 
-[@bs.val] [@bs.scope "document"]
-external getCanvasById: string => canvas = "getElementById";
-
 let findQuadrant = (sinus: float, cosinus: float): int => {
   let sinGreaterThanZero = sinus > 0.;
   let cosGreaterThanZero = cosinus > 0.;
@@ -22,18 +19,14 @@ let findQuadrant = (sinus: float, cosinus: float): int => {
 };
 
 /* Document related values */
-[@bs.val] [@bs.scope ("document", "body")] external clientWidth: int = "";
-[@bs.val] [@bs.scope ("document", "body")] external clientHeight: int = "";
-[@bs.val] [@bs.scope "window"]
-external requestAnimationFrame: (float => unit) => unit = "";
+[@bs.val] [@bs.scope "document"] external body: Dom.element = "";
 
 let labelPadding = 5.;
 
-let resize = (canvas: canvas) =>
-  if (widthGet(canvas) !== clientWidth && heightGet(canvas) !== clientHeight) {
-    widthSet(canvas, clientWidth);
-    heightSet(canvas, clientHeight);
-  };
+let resize = (canvas: canvas, maxWidth: int, maxHeight: int) => {
+  widthSet(canvas, max(widthGet(canvas), maxWidth));
+  heightSet(canvas, max(heightGet(canvas), maxHeight));
+}
 
 let rec draw = (cfg: config, canvas: canvas, ctx: context) => {
   let w = widthGet(canvas);
@@ -262,7 +255,7 @@ let rec draw = (cfg: config, canvas: canvas, ctx: context) => {
     ctx,
   );
 
-  requestAnimationFrame(_ts => {
+  Util.Dom.requestAnimationFrame(_ts => {
     let degree =
       switch (deg +. cfg.step) {
       | v when v > 360. => mod_float(v, 360.)
@@ -275,15 +268,18 @@ let rec draw = (cfg: config, canvas: canvas, ctx: context) => {
 };
 
 let run = () => {
-  Js.log("Start Trigonoparty");
+  open Util.Dom;
 
+  Js.log("Start Trigonoparty");
   let initConfig: config = {radius: None, step: 0.2, degree: 1.};
 
   let canvas = getCanvasById("js-canvas");
+  let mainEl = getElementById("js-main");
+
   let ctx = getContext(canvas, "2d", contextOptions(~alpha=false));
   imageSmoothingEnabledSet(ctx, true);
   imageSmoothingQualitySet(ctx, "high");
-  resize(canvas);
+  resize(canvas, getClientWidth(mainEl), max(getClientHeight(mainEl), getClientHeight(body)));
 
   draw(initConfig, canvas, ctx);
 };
