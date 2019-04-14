@@ -1,10 +1,8 @@
 [@bs.deriving abstract]
-type canvas = {
+type t = {
   mutable width: int,
   mutable height: int,
 };
-
-type t = canvas;
 
 [@bs.deriving abstract]
 type context = {
@@ -37,7 +35,7 @@ type contextOptions = {alpha: bool};
 [@bs.send] external save: context => unit = "";
 [@bs.send] external translate: (context, float, float) => unit = "";
 
-[@bs.send] external getContext: (canvas, string, contextOptions) => context = "";
+[@bs.send] external getContext: (t, string, contextOptions) => context = "";
 
 /* Math related functions */
 type radian = float;
@@ -105,7 +103,7 @@ let rec drawRect = (~x, ~y, ~w, ~h, ~color=Colors.gray, ~angle=0., ~shouldFill=f
     shouldFill ? fill(ctx) : stroke(ctx);
   };
 
-let resize = (canvas: canvas, maxWidth: int, maxHeight: int) => {
+let resize = (canvas: t, maxWidth: int, maxHeight: int) => {
   widthSet(canvas, max(widthGet(canvas), maxWidth));
   heightSet(canvas, max(heightGet(canvas), maxHeight));
 }

@@ -20,7 +20,7 @@ let findQuadrant = (sinus: float, cosinus: float): int => {
 
 let labelPadding = 5.;
 
-let rec draw = (cfg: config, canvas: canvas, ctx: context) => {
+let rec draw = (cfg: config, canvas: Canvas.t, ctx: context) => {
   let w = widthGet(canvas);
   let h = heightGet(canvas);
 

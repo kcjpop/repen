@@ -15,6 +15,7 @@ let renderMainContent = currentPath => {
 
   switch (currentPath) {
   | ["trigonoparty"] => Trigonoparty.run(~canvas, ~ctx)
+  | ["particles"] => Particles.run(~canvas, ~ctx)
   | [] => Trigonoparty.run(~canvas, ~ctx)
   | _ => Js.log("Not found")
   };

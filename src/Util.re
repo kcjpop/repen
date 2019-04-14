@@ -1,3 +1,5 @@
+let toFloat = Js.Int.toFloat;
+
 module Dom = {
   type el = Dom.element;
 
@@ -53,3 +55,12 @@ module Dom = {
     el;
   }
 };
+
+module Random = {
+  let float = (min: float, max: float) =>
+    Js.Math.random() *. (max -. min) +. min;
+
+  let int = (min: int, max: int) => {
+    Js.Math.floor(float(toFloat(min), toFloat(max)))
+  }
+}
