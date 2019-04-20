@@ -1,1 +1,1 @@
-let run = () => Js.log("Not Found")
+let run = () => Js.log("Not Found");

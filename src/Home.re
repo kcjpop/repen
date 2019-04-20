@@ -1,1 +1,1 @@
-let run = () => Js.log("Homepage")
+let run = () => Js.log("Homepage");

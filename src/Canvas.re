@@ -19,7 +19,8 @@ type context = {
 [@bs.deriving abstract]
 type contextOptions = {alpha: bool};
 
-[@bs.send] external arc: (context, float, float, float, float, float, bool) => unit = "";
+[@bs.send]
+external arc: (context, float, float, float, float, float, bool) => unit = "";
 [@bs.send] external beginPath: context => unit = "";
 [@bs.send] external clearRect: (context, int, int, int, int) => unit = "";
 [@bs.send] external closePath: context => unit = "";
@@ -44,7 +45,8 @@ type degree = float;
 let tPI = 2. *. Js_math._PI;
 let degToRad = (deg: degree): radian => deg /. 360. *. tPI;
 
-let drawLine = (~fromX, ~fromY, ~toX, ~toY, ~color, ~lineWidth=1.5, ctx: context) => {
+let drawLine =
+    (~fromX, ~fromY, ~toX, ~toY, ~color, ~lineWidth=1.5, ctx: context) => {
   lineWidthSet(ctx, lineWidth);
   strokeStyleSet(ctx, color);
   beginPath(ctx);
@@ -54,7 +56,18 @@ let drawLine = (~fromX, ~fromY, ~toX, ~toY, ~color, ~lineWidth=1.5, ctx: context
 };
 
 let drawCircle =
-    (~x, ~y, ~r, ~color, ~shouldFill: bool, ~startAngle=0., ~endAngle=tPI, ~aCW=true, ~lineWidth=1.5, ctx: context) => {
+    (
+      ~x,
+      ~y,
+      ~r,
+      ~color,
+      ~shouldFill: bool,
+      ~startAngle=0.,
+      ~endAngle=tPI,
+      ~aCW=true,
+      ~lineWidth=1.5,
+      ctx: context,
+    ) => {
   lineWidthSet(ctx, lineWidth);
   strokeStyleSet(ctx, color);
   fillStyleSet(ctx, color);
@@ -81,9 +94,34 @@ let withAngle = (ctx, x, y, angle: degree, fn) => {
 };
 
 let rec drawText =
-        (~x, ~y, ~text, ~color=Colors.gray, ~size=14, ~angle=0., ~align="center", ~baseline="bottom", ctx: context) =>
+        (
+          ~x,
+          ~y,
+          ~text,
+          ~color=Colors.gray,
+          ~size=14,
+          ~angle=0.,
+          ~align="center",
+          ~baseline="bottom",
+          ctx: context,
+        ) =>
   if (angle !== 0.) {
-    withAngle(ctx, x, y, angle, drawText(~x=0., ~y=0., ~text, ~color, ~size, ~angle=0., ~align, ~baseline));
+    withAngle(
+      ctx,
+      x,
+      y,
+      angle,
+      drawText(
+        ~x=0.,
+        ~y=0.,
+        ~text,
+        ~color,
+        ~size,
+        ~angle=0.,
+        ~align,
+        ~baseline,
+      ),
+    );
   } else {
     fontSet(ctx, string_of_int(size) ++ "px sans-serif");
     textBaseLineSet(ctx, baseline);
@@ -92,9 +130,35 @@ let rec drawText =
     fillText(ctx, text, x, y);
   };
 
-let rec drawRect = (~x, ~y, ~w, ~h, ~color=Colors.gray, ~angle=0., ~shouldFill=false, ~lineWidth=1.5, ctx: context) =>
+let rec drawRect =
+        (
+          ~x,
+          ~y,
+          ~w,
+          ~h,
+          ~color=Colors.gray,
+          ~angle=0.,
+          ~shouldFill=false,
+          ~lineWidth=1.5,
+          ctx: context,
+        ) =>
   if (angle !== 0.) {
-    withAngle(ctx, x, y, angle, drawRect(~x=0., ~y=0., ~w, ~h, ~color, ~angle=0., ~shouldFill, ~lineWidth))
+    withAngle(
+      ctx,
+      x,
+      y,
+      angle,
+      drawRect(
+        ~x=0.,
+        ~y=0.,
+        ~w,
+        ~h,
+        ~color,
+        ~angle=0.,
+        ~shouldFill,
+        ~lineWidth,
+      ),
+    );
   } else {
     lineWidthSet(ctx, lineWidth);
     strokeStyleSet(ctx, color);
@@ -106,4 +170,4 @@ let rec drawRect = (~x, ~y, ~w, ~h, ~color=Colors.gray, ~angle=0., ~shouldFill=f
 let resize = (canvas: t, maxWidth: int, maxHeight: int) => {
   widthSet(canvas, max(widthGet(canvas), maxWidth));
   heightSet(canvas, max(heightGet(canvas), maxHeight));
-}
+};

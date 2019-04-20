@@ -57,11 +57,11 @@ let getRandomDirection = () => {
 
 let getRandomPositionFromDirection = (~r, ~xRange, ~yRange, direction) => {
   switch (direction) {
-    | Top => (randomFloat(0., xRange), -. r)
-    | Right => (xRange +. r, randomFloat(0., yRange))
-    | Bottom => (randomFloat(0., xRange), yRange +. r)
-    | Left => (-. r, randomFloat(0., yRange))
-    };
+  | Top => (randomFloat(0., xRange), -. r)
+  | Right => (xRange +. r, randomFloat(0., yRange))
+  | Bottom => (randomFloat(0., xRange), yRange +. r)
+  | Left => (-. r, randomFloat(0., yRange))
+  };
 };
 
 let makeBalls =
@@ -78,10 +78,10 @@ let makeBalls =
     _ => {
       let r = 2.0;
       let (vx, vy) = makeRandomSpeed(direction);
-      let (x, y) = init ? (
-        randomFloat(0., xRange),
-        randomFloat(0., yRange)
-      ) : getRandomPositionFromDirection(~r, ~xRange, ~yRange, direction);
+      let (x, y) =
+        init
+          ? (randomFloat(0., xRange), randomFloat(0., yRange))
+          : getRandomPositionFromDirection(~r, ~xRange, ~yRange, direction);
 
       {x, y, vx, vy, r, alpha: 1.0, phase: randomFloat(0., 10.)};
     },
@@ -170,7 +170,7 @@ let rec render = (canvas, ctx, balls) => {
 
   clearRect(ctx, 0, 0, canvasWidth, canvasHeight);
   fillStyleSet(ctx, "#111");
-  fillRect(ctx, 0., 0., canvasWidth, canvasHeight );
+  fillRect(ctx, 0., 0., canvasWidth, canvasHeight);
 
   ctx->renderBalls(balls);
   ctx->renderLines(balls);
